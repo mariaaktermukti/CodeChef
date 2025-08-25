@@ -1,32 +1,37 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() 
+int main()
 {
-    int T; 
-    cin >> T;
-    while (T--) 
+    int t, n;
+    cin >> t;
+    while (t--)
     {
-        int N; cin >> N;
-        vector<int> A(N);
-        int maxA = 0;
-        for (int i = 0; i < N; ++i) 
+        cin >> n;
+        vector<int> A(n);
+        for (int i = 0; i < n; ++i)
         {
             cin >> A[i];
-            maxA = max(maxA, A[i]);
         }
-        int maxProfit = 0;
-        for (int X = 0; X <= maxA; ++X) 
+        int caketomake, maxProfit = 0;
+        int idx = 0;
+        while (idx < n)
         {
-            int sold = 0;
-            for (int i = 0; i < N; ++i)
-                sold += min(X, A[i]);
-            int profit = 50 * sold - 30 * N * X;
-            maxProfit = max(maxProfit, profit);
+            caketomake = A[idx];
+            int spend = A[idx] * 30 * n;
+            int sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (A[i] >= caketomake)
+                    sum += caketomake * 50;
+                else
+                    sum += A[i] * 50;
+            }
+
+            maxProfit = max(maxProfit, sum - spend);
+            idx++;
         }
+
         cout << maxProfit << endl;
     }
-    return 0;
 }
